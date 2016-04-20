@@ -3,31 +3,31 @@ package ua.kpi.speleo.app;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import ua.kpi.speleo.R;
 import ua.kpi.speleo.app.bluetooth.BluetoothHelper;
+import ua.kpi.speleo.app.distox.DistoXData;
+import ua.kpi.speleo.app.services.BluetoothListenerService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Vlad on 4/18/2016.
- */
 public class BluetoothActivity extends Activity {
     private Switch switchBluetooth;
     private CheckBox checkBoxDistoX;
     private ListView listViewDevices;
+    private Button buttonTest;
 
     private final BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
     private ArrayAdapter<String> bluetoothArrayAdapter;
     private List<BluetoothDevice> bluetoothList  = new ArrayList<BluetoothDevice>();
+    private Intent intent;
+    private TestReceiver testReceiver;
+
 
     final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
@@ -56,12 +56,20 @@ public class BluetoothActivity extends Activity {
         switchBluetooth = (Switch) findViewById(R.id.switchBluetooth);
         checkBoxDistoX = (CheckBox) findViewById(R.id.checkBoxDistoX);
         listViewDevices = (ListView) findViewById(R.id.listViewDevices);
+        buttonTest = (Button) findViewById(R.id.buttonTest);
 
+        //Register BroadcastReceiver
+        //to receive event from our service
+        testReceiver = new TestReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("BLUETOOTH_LISTENER_DATA");
+        registerReceiver(testReceiver, intentFilter);
+
+
+        intent = new Intent(BluetoothActivity.this, BluetoothListenerService.class);
 
         bluetoothArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         listViewDevices.setAdapter(bluetoothArrayAdapter);
-
-
 
         if(bluetooth.isEnabled()) {
             switchBluetooth.setChecked(true);
@@ -89,6 +97,7 @@ public class BluetoothActivity extends Activity {
                     bluetooth.enable();
                     searchBluetoothDevices();
                 } else {
+                    stopService(intent);
                     bluetooth.disable();
                     unregisterReceiver(bluetoothReceiver);
                 }
@@ -99,6 +108,25 @@ public class BluetoothActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.v("on item",bluetoothList.get(i).toString());
+                bluetooth.cancelDiscovery();
+                BluetoothListenerService bluetoothListenerService;
+                //intent.putExtra("object", obj);
+                //startService(intent);
+                intent.putExtra("device",bluetoothList.get(i));
+                startService(intent);
+
+            }
+        });
+
+        buttonTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*double dist = intent.getDoubleExtra("dist", 0);
+                buttonTest.setText(String.valueOf(dist));*/
+
+                SharedPreferences preferencesTest = getSharedPreferences("test", Context.MODE_PRIVATE);
+                buttonTest.setText(preferencesTest.getString("info",""));
+                //Log.v("onClick",String.valueOf(preferencesTest.getString("info","")));
             }
         });
 
@@ -123,7 +151,18 @@ public class BluetoothActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(bluetoothReceiver);
+        if(bluetoothReceiver != null) {
+            unregisterReceiver(bluetoothReceiver);
+        }
+    }
+
+    private class TestReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            double dist = intent.getDoubleExtra("dist", 0);
+            Log.v("Receive_Service", "dist " + String.valueOf(dist));
+        }
     }
 }
 

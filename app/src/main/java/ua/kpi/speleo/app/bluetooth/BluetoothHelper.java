@@ -8,9 +8,6 @@ import android.widget.ArrayAdapter;
 
 import java.util.List;
 
-/**
- * Created by Vlad on 4/18/2016.
- */
 public class BluetoothHelper {
     private BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> bluetoothArrayAdapter;
