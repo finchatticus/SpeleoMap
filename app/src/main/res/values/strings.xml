@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SpeleoMap</string>
+
+    <!-- Main activity-->
+    <string name="button_bluetooth">Bluetooth</string>
+    <string name="button_maps">Maps</string>
+    <string name="button_settings">Settings</string>
+
+    <!--Bluetooth activity -->
+    <string name="textview_search">Search and connect to DistoX</string>
+    <string name="switch_bluetooth">Bluetooth</string>
+    <string name="checkbox_distox">Only DistoX</string>
+</resources>
