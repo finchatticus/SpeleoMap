@@ -1,6 +1,7 @@
 package ua.kpi.speleo.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +42,8 @@ public class NewMapActivity extends Activity {
             String name = editTextName.getText().toString();
             if(!name.matches("")) {
                 Log.d(NewMapActivity.class.getSimpleName().toString(),"click");
+                Intent intent = new Intent(getApplicationContext(), DataActivity.class);
+                startActivity(intent);
                 //Caves caves = new Caves(name);
                 //CavesDAO cavesDAO = new CavesDAO(getApplicationContext());
                 //cavesDAO.save(caves);

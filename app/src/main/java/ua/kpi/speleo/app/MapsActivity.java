@@ -29,7 +29,7 @@ public class MapsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps);
 
-        listViewData = (ListView) findViewById(R.id.listViewData);
+        listViewData = (ListView) findViewById(R.id.listViewMaps);
         buttonNew = (Button) findViewById(R.id.buttonNew);
         buttonNew.setOnClickListener(new View.OnClickListener() {
             @Override

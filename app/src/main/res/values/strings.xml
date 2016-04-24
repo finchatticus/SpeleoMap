@@ -17,4 +17,15 @@
     <!--New map activity -->
     <string name="textview_new_map">New map name:</string>
     <string name="button_create_map">Create map</string>
+
+    <!--Listview headers -->
+    <string name="h1">_From</string>
+    <string name="h2">_To</string>
+    <string name="h3">_Distance</string>
+    <string name="h4">_Azimuth</string>
+    <string name="h5">_Inclination</string>
+
+    <!--Data activity -->
+    <string name="button_skeleton">Skeleton</string>
+    <string name="button_sketch">Sketch</string>
 </resources>
