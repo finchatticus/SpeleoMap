@@ -30,6 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".app.BluetoothActivity" />
+        <activity android:name=".app.MapsActivity" />
+        <activity android:name=".app.NewMapActivity" />
 
         <service
             android:name=".app.services.BluetoothListenerService"

@@ -32,7 +32,8 @@ public class MainActivity extends Activity {
         buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
             }
         });
         buttonSettings.setOnClickListener(new View.OnClickListener() {

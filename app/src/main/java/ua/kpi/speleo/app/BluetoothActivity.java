@@ -56,7 +56,7 @@ public class BluetoothActivity extends Activity {
         switchBluetooth = (Switch) findViewById(R.id.switchBluetooth);
         checkBoxDistoX = (CheckBox) findViewById(R.id.checkBoxDistoX);
         listViewDevices = (ListView) findViewById(R.id.listViewDevices);
-        buttonTest = (Button) findViewById(R.id.buttonTest);
+        //buttonTest = (Button) findViewById(R.id.buttonTest);
 
         //Register BroadcastReceiver
         //to receive event from our service
@@ -118,17 +118,17 @@ public class BluetoothActivity extends Activity {
             }
         });
 
-        buttonTest.setOnClickListener(new View.OnClickListener() {
+        /*buttonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*double dist = intent.getDoubleExtra("dist", 0);
-                buttonTest.setText(String.valueOf(dist));*/
+                *//*double dist = intent.getDoubleExtra("dist", 0);
+                buttonTest.setText(String.valueOf(dist));*//*
 
                 SharedPreferences preferencesTest = getSharedPreferences("test", Context.MODE_PRIVATE);
                 buttonTest.setText(preferencesTest.getString("info",""));
                 //Log.v("onClick",String.valueOf(preferencesTest.getString("info","")));
             }
-        });
+        });*/
 
     }
 

@@ -10,4 +10,11 @@
     <string name="textview_search">Search and connect to DistoX</string>
     <string name="switch_bluetooth">Bluetooth</string>
     <string name="checkbox_distox">Only DistoX</string>
+
+    <!--Maps activity -->
+    <string name="button_new_map">New cave map</string>
+
+    <!--New map activity -->
+    <string name="textview_new_map">New map name:</string>
+    <string name="button_create_map">Create map</string>
 </resources>
