@@ -1,30 +1,37 @@
 package ua.kpi.speleo.app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 import ua.kpi.speleo.R;
 import ua.kpi.speleo.app.db.Caves;
 import ua.kpi.speleo.app.db.Data;
-import ua.kpi.speleo.app.distox.DistoXData;
+import ua.kpi.speleo.app.db.DataDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static ua.kpi.speleo.app.Constants.COLUMN1;
-import static ua.kpi.speleo.app.Constants.COLUMN2;
-import static ua.kpi.speleo.app.Constants.COLUMN3;
-import static ua.kpi.speleo.app.Constants.COLUMN4;
-import static ua.kpi.speleo.app.Constants.COLUMN5;
+import static ua.kpi.speleo.app.Constants.FROM;
+import static ua.kpi.speleo.app.Constants.TO;
+import static ua.kpi.speleo.app.Constants.DISTANCE;
+import static ua.kpi.speleo.app.Constants.AZIMUTH;
+import static ua.kpi.speleo.app.Constants.INCLINATION;
 
 public class ListviewAdapter extends BaseAdapter {
+    private static final String LOG_TAG = ListviewAdapter.class.getSimpleName();
 
-    public ArrayList<HashMap> list;
-    Activity activity;
+    private ArrayList<HashMap> list;
+    private Activity activity;
 
     public ListviewAdapter(Activity activity, ArrayList<HashMap> list) {
         super();
@@ -50,20 +57,9 @@ public class ListviewAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void insert(int position, HashMap item) {
+    /*public void insert(int position, HashMap item) {
         list.set(position,item);
-    }
-
-    public Data getItemData(int position) {
-        HashMap t = new HashMap();
-        t = list.get(position);
-        int from = Integer.parseInt((String) t.get(COLUMN1));
-        int to = Integer.parseInt((String) t.get(COLUMN2));
-        double distance = Double.parseDouble((String) t.get(COLUMN3));
-        double azimuth = Double.parseDouble((String) t.get(COLUMN4));
-        double inclination = Double.parseDouble((String) t.get(COLUMN5));
-        return new Data();
-    }
+    }*/
 
     private class ViewHolder {
         EditText editText1;
@@ -74,11 +70,11 @@ public class ListviewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
 
         // TODO Auto-generated method stub
-        ViewHolder holder;
+        final ViewHolder holder;
         LayoutInflater inflater =  activity.getLayoutInflater();
 
         if (convertView == null)
@@ -86,26 +82,163 @@ public class ListviewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.listview_row, null);
             holder = new ViewHolder();
             holder.editText1 = (EditText) convertView.findViewById(R.id.column1);
+            holder.editText1.setRawInputType(Configuration.KEYBOARD_12KEY);
             holder.editText2 = (EditText) convertView.findViewById(R.id.column2);
+            holder.editText2.setRawInputType(Configuration.KEYBOARD_12KEY);
             holder.editText3 = (EditText) convertView.findViewById(R.id.column3);
+            holder.editText3.setRawInputType(Configuration.KEYBOARD_12KEY);
             holder.editText4 = (EditText) convertView.findViewById(R.id.column4);
+            holder.editText4.setRawInputType(Configuration.KEYBOARD_12KEY);
             holder.editText5 = (EditText) convertView.findViewById(R.id.column5);
+            holder.editText5.setRawInputType(Configuration.KEYBOARD_12KEY);
+
             convertView.setTag(holder);
-        }
-        else
+        } else
         {
             holder = (ViewHolder) convertView.getTag();
         }
 
         HashMap map = list.get(position);
-        holder.editText1.setText(map.get(COLUMN1).toString());
-        holder.editText2.setText(map.get(COLUMN2).toString());
-        holder.editText3.setText(map.get(COLUMN3).toString());
-        holder.editText4.setText(map.get(COLUMN4).toString());
-        holder.editText5.setText(map.get(COLUMN5).toString());
+        holder.editText1.setText(map.get(FROM).toString());
+        holder.editText2.setText(map.get(TO).toString());
+        holder.editText3.setText(map.get(DISTANCE).toString());
+        holder.editText4.setText(map.get(AZIMUTH).toString());
+        holder.editText5.setText(map.get(INCLINATION).toString());
+
+        //holder.editText1.addTextChangedListener();
+
+        holder.editText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    final EditText editText = (EditText) view;
+                    String text = editText.getText().toString();
+                    int id = (Integer) list.get(position).get(Constants.ID);
+                    int from = Integer.valueOf(text);
+                    if(text != list.get(position).get(DISTANCE)) {
+                        Data data = new Data();
+                        data.setId(id);
+                        data.setFrom(from);
+                        data.setTo((Integer) list.get(position).get(Constants.TO));
+                        data.setDistance((Double) list.get(position).get(Constants.DISTANCE));
+                        data.setAzimuth((Double) list.get(position).get(Constants.AZIMUTH));
+                        data.setInclination((Double) list.get(position).get(Constants.INCLINATION));
+                        Caves caves = new Caves((Integer) list.get(position).get(Constants.ID_CAVE));
+                        data.setCaves(caves);
+
+                        DataDAO dataDAO = new DataDAO(view.getContext());
+                        dataDAO.update(data);
+                    }
+                }
+            }
+        });
+
+        holder.editText2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    final EditText editText = (EditText) view;
+                    String text = editText.getText().toString();
+                    int id = (Integer) list.get(position).get(Constants.ID);
+                    int to = Integer.valueOf(text);
+                    if(text != list.get(position).get(DISTANCE)) {
+                        Data data = new Data();
+                        data.setId(id);
+                        data.setFrom((Integer) list.get(position).get(Constants.FROM));
+                        data.setTo(to);
+                        data.setDistance((Double) list.get(position).get(Constants.DISTANCE));
+                        data.setAzimuth((Double) list.get(position).get(Constants.AZIMUTH));
+                        data.setInclination((Double) list.get(position).get(Constants.INCLINATION));
+                        Caves caves = new Caves((Integer) list.get(position).get(Constants.ID_CAVE));
+                        data.setCaves(caves);
+
+                        DataDAO dataDAO = new DataDAO(view.getContext());
+                        dataDAO.update(data);
+                    }
+                }
+            }
+        });
+
+        holder.editText3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    final EditText editText = (EditText) view;
+                    String text = editText.getText().toString();
+                    int id = (Integer) list.get(position).get(Constants.ID);
+                    double distance = Double.valueOf(text);
+                    if(text != list.get(position).get(DISTANCE)) {
+                        Data data = new Data();
+                        data.setId(id);
+                        data.setFrom((Integer) list.get(position).get(Constants.FROM));
+                        data.setTo((Integer) list.get(position).get(Constants.FROM));
+                        data.setDistance(distance);
+                        data.setAzimuth((Double) list.get(position).get(Constants.AZIMUTH));
+                        data.setInclination((Double) list.get(position).get(Constants.INCLINATION));
+                        Caves caves = new Caves((Integer) list.get(position).get(Constants.ID_CAVE));
+                        data.setCaves(caves);
+
+                        DataDAO dataDAO = new DataDAO(view.getContext());
+                        dataDAO.update(data);
+                    }
+                }
+            }
+        });
+
+        holder.editText4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    final EditText editText = (EditText) view;
+                    String text = editText.getText().toString();
+                    int id = (Integer) list.get(position).get(Constants.ID);
+                    double azimuth = Double.valueOf(text);
+                    if(text != list.get(position).get(DISTANCE)) {
+                        Data data = new Data();
+                        data.setId(id);
+                        data.setFrom((Integer) list.get(position).get(Constants.FROM));
+                        data.setTo((Integer) list.get(position).get(Constants.FROM));
+                        data.setDistance((Double) list.get(position).get(Constants.DISTANCE));
+                        data.setAzimuth(azimuth);
+                        data.setInclination((Double) list.get(position).get(Constants.INCLINATION));
+                        Caves caves = new Caves((Integer) list.get(position).get(Constants.ID_CAVE));
+                        data.setCaves(caves);
+
+                        DataDAO dataDAO = new DataDAO(view.getContext());
+                        dataDAO.update(data);
+                    }
+                }
+            }
+        });
+
+        holder.editText5.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    final EditText editText = (EditText) view;
+                    String text = editText.getText().toString();
+                    int id = (Integer) list.get(position).get(Constants.ID);
+                    double inclination = Double.valueOf(text);
+                    if(text != list.get(position).get(DISTANCE)) {
+                        Data data = new Data();
+                        data.setId(id);
+                        data.setFrom((Integer) list.get(position).get(Constants.FROM));
+                        data.setTo((Integer) list.get(position).get(Constants.FROM));
+                        data.setDistance((Double) list.get(position).get(Constants.DISTANCE));
+                        data.setAzimuth((Double) list.get(position).get(Constants.AZIMUTH));
+                        data.setInclination(inclination);
+                        Caves caves = new Caves((Integer) list.get(position).get(Constants.ID_CAVE));
+                        data.setCaves(caves);
+
+                        DataDAO dataDAO = new DataDAO(view.getContext());
+                        dataDAO.update(data);
+                    }
+                }
+            }
+        });
+
 
         return convertView;
     }
-
 }
 

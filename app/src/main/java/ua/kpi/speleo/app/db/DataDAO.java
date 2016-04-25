@@ -121,15 +121,13 @@ public class DataDAO extends DataDBDAO {
             caves = new Caves(cursor.getInt(7));
             data.setCaves(caves);
 
-            Log.d("query", "id = " + data.getId());
-
             HashMap t = new HashMap();
             t.put(Constants.ID,data.getId());
-            t.put(Constants.COLUMN1, data.getFrom());
-            t.put(Constants.COLUMN2, data.getTo());
-            t.put(Constants.COLUMN3, data.getDistance());
-            t.put(Constants.COLUMN4, data.getAzimuth());
-            t.put(Constants.COLUMN5, data.getInclination());
+            t.put(Constants.FROM, data.getFrom());
+            t.put(Constants.TO, data.getTo());
+            t.put(Constants.DISTANCE, data.getDistance());
+            t.put(Constants.AZIMUTH, data.getAzimuth());
+            t.put(Constants.INCLINATION, data.getInclination());
             t.put(Constants.ID_CAVE, data.getCaves().getId());
             dataList.add(t);
         }
@@ -139,6 +137,8 @@ public class DataDAO extends DataDBDAO {
     public long update(Data data) {
 
         ContentValues values = new ContentValues();
+        values.put(DataBaseHelper.DATA_FROM, data.getFrom());
+        values.put(DataBaseHelper.DATA_TO, data.getTo());
         values.put(DataBaseHelper.DATA_AZIMUTH, data.getAzimuth());
         values.put(DataBaseHelper.DATA_DISTANCE, data.getDistance());
         values.put(DataBaseHelper.DATA_INCLINATION, data.getInclination());
