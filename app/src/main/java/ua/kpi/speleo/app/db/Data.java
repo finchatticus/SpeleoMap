@@ -2,6 +2,7 @@ package ua.kpi.speleo.app.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import ua.kpi.speleo.app.distox.DistoXEncoding;
 
 public class Data implements Parcelable {
     private int id;
@@ -38,6 +39,13 @@ public class Data implements Parcelable {
         this.inclination = inclination;
         this.rollAngle = rollAngle;
         this.caves = caves;
+    }
+
+    public Data(DistoXEncoding distoXEncoding) {
+        this.distance = distoXEncoding.getDistance();
+        this.azimuth = distoXEncoding.getAzimuth();
+        this.inclination = distoXEncoding.getInclination();
+        this.rollAngle = distoXEncoding.getRollAngle();
     }
 
     private Data(Parcel parcel) {

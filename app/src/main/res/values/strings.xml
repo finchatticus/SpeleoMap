@@ -29,4 +29,5 @@
     <string name="button_skeleton">Skeleton</string>
     <string name="button_sketch">Sketch</string>
     <string name="button_save">Save</string>
+    <string name="button_refresh">Refresh</string>
 </resources>

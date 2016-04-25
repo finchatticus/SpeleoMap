@@ -76,5 +76,11 @@
             android:text="@string/button_save"
             android:id="@+id/buttonSave" android:layout_alignBottom="@+id/buttonSketch"
             android:layout_toRightOf="@+id/buttonSketch"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_refresh"
+            android:id="@+id/buttonRefresh" android:layout_below="@+id/listViewData"
+            android:layout_toRightOf="@+id/buttonSave"/>
 
 </RelativeLayout>

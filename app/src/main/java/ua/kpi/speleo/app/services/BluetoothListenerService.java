@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import ua.kpi.speleo.app.db.Caves;
+import ua.kpi.speleo.app.db.Data;
+import ua.kpi.speleo.app.db.DataDAO;
 import ua.kpi.speleo.app.distox.DistoXData;
 import ua.kpi.speleo.app.distox.DistoXEncoding;
 
@@ -31,6 +34,10 @@ public class BluetoothListenerService extends Service {
     private Thread workerThread;
     private byte[] input;
 
+    private Caves caves;
+
+    public static boolean isEnabled = false;
+
     private SharedPreferences preferencesTest;
 
     public BluetoothListenerService() {
@@ -50,10 +57,13 @@ public class BluetoothListenerService extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
+        isEnabled = true;
         super.onStart(intent, startId);
         Log.v("Service","Service start");
         device = intent.getParcelableExtra("device");
+        caves = intent.getParcelableExtra("caves");
         Log.v("Service",device.toString());
+        Log.v("Service",caves.toString());
         //connect to device
         UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
         try {
@@ -100,6 +110,12 @@ public class BluetoothListenerService extends Service {
                                         editor.putString("info", distoXEncoding.getEncodingData().toString());
                                         editor.apply();
 
+                                        Data data = new Data(distoXEncoding);
+                                        DataDAO dataDAO = new DataDAO(getApplicationContext());
+                                        data.setCaves(caves);
+
+                                        dataDAO.save(data);
+
                                         /*
                                         Intent intent = new Intent();
                                         intent.setAction("BLUETOOTH_LISTENER_DATA");
@@ -132,7 +148,7 @@ public class BluetoothListenerService extends Service {
         Log.v("Service","Service stop");
 
         stopWorker = true;
-        workerThread.interrupt();
+        //workerThread.interrupt();
         try {
             outputStream.close();
             inputStream.close();
@@ -152,6 +168,9 @@ public class BluetoothListenerService extends Service {
         }
 
         Log.v("Service","Service stop");
+
+        isEnabled = false;
+
         super.onDestroy();
     }
 

@@ -28,6 +28,8 @@ public class BluetoothActivity extends Activity {
     private Intent intent;
     private TestReceiver testReceiver;
 
+    private static BluetoothDevice bluetoothDeviceConnect;
+
 
     final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
@@ -60,10 +62,10 @@ public class BluetoothActivity extends Activity {
 
         //Register BroadcastReceiver
         //to receive event from our service
-        testReceiver = new TestReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("BLUETOOTH_LISTENER_DATA");
-        registerReceiver(testReceiver, intentFilter);
+        //testReceiver = new TestReceiver();
+        //IntentFilter intentFilter = new IntentFilter();
+        //intentFilter.addAction("BLUETOOTH_LISTENER_DATA");
+        //registerReceiver(testReceiver, intentFilter);
 
 
         intent = new Intent(BluetoothActivity.this, BluetoothListenerService.class);
@@ -109,12 +111,13 @@ public class BluetoothActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.v("on item",bluetoothList.get(i).toString());
                 bluetooth.cancelDiscovery();
-                BluetoothListenerService bluetoothListenerService;
+                //BluetoothListenerService bluetoothListenerService;
                 //intent.putExtra("object", obj);
                 //startService(intent);
-                intent.putExtra("device",bluetoothList.get(i));
-                startService(intent);
+                //intent.putExtra("device",bluetoothList.get(i));
+                //startService(intent);
 
+                bluetoothDeviceConnect = bluetoothList.get(i);
             }
         });
 
@@ -163,6 +166,10 @@ public class BluetoothActivity extends Activity {
             double dist = intent.getDoubleExtra("dist", 0);
             Log.v("Receive_Service", "dist " + String.valueOf(dist));
         }
+    }
+
+    public static BluetoothDevice getBluetoothDeviceConnect() {
+        return bluetoothDeviceConnect;
     }
 }
 
