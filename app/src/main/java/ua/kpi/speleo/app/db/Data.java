@@ -17,7 +17,7 @@ public class Data implements Parcelable {
         super();
     }
 
-    public Data(int from, int to, double distance, double rollAngle, double inclination, double azimuth, Caves caves) {
+    public Data(int from, int to, double distance, double azimuth, double inclination, double rollAngle, Caves caves) {
         super();
         this.from = from;
         this.to = to;
@@ -25,6 +25,18 @@ public class Data implements Parcelable {
         this.rollAngle = rollAngle;
         this.inclination = inclination;
         this.azimuth = azimuth;
+        this.caves = caves;
+    }
+
+    public Data(int id, int from, int to, double azimuth, double distance, double inclination, double rollAngle, Caves caves) {
+        super();
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.azimuth = azimuth;
+        this.distance = distance;
+        this.inclination = inclination;
+        this.rollAngle = rollAngle;
         this.caves = caves;
     }
 

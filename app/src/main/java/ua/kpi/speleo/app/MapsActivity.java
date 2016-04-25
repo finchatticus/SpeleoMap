@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import ua.kpi.speleo.R;
 import ua.kpi.speleo.app.db.Caves;
 import ua.kpi.speleo.app.db.CavesDAO;
-import ua.kpi.speleo.app.db.Data;
-import ua.kpi.speleo.app.db.DataDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +20,12 @@ import java.util.List;
  * Created by cooper on 22.04.16.
  */
 public class MapsActivity extends Activity {
-    ListView listViewData;
-    Button buttonNew;
+    private static final String LOG_TAG = MapsActivity.class.getSimpleName();
+
+    private ListView listViewData;
+    private Button buttonNew;
+
+    List<Caves> cavesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,17 @@ public class MapsActivity extends Activity {
             }
         });
 
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,	android.R.layout.simple_list_item_1, cavesListStr);
-        //listViewData.setAdapter(adapter);
+        CavesDAO cavesDAO = new CavesDAO(this);
+        ArrayList<String> cavesListStr = new ArrayList<String>();
+        cavesList = new ArrayList<Caves>();
+        cavesList = cavesDAO.getCaves();
+        for (int i = 0; i < cavesDAO.getCaves().size(); i++) {
+            cavesListStr.add(cavesDAO.getCaves().get(i).getName());
+        }
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,	android.R.layout.simple_list_item_1, cavesListStr);
+        listViewData.setAdapter(adapter);
+        listViewData.setOnItemClickListener(listViewDataOnItemClick);
     }
 
     @Override
@@ -53,4 +64,14 @@ public class MapsActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    private AdapterView.OnItemClickListener listViewDataOnItemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Log.v(LOG_TAG,"pos " + i + " id " + l + " cave " + cavesList.get(i).getName() + " cave id " + cavesList.get(i).getId());
+            Intent intent = new Intent(getApplicationContext(), DataActivity.class);
+            intent.putExtra("Caves", cavesList.get(i));
+            startActivity(intent);
+        }
+    };
 }

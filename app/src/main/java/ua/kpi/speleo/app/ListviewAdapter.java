@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import ua.kpi.speleo.R;
+import ua.kpi.speleo.app.db.Caves;
+import ua.kpi.speleo.app.db.Data;
+import ua.kpi.speleo.app.distox.DistoXData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +50,21 @@ public class ListviewAdapter extends BaseAdapter {
         return 0;
     }
 
+    public void insert(int position, HashMap item) {
+        list.set(position,item);
+    }
+
+    public Data getItemData(int position) {
+        HashMap t = new HashMap();
+        t = list.get(position);
+        int from = Integer.parseInt((String) t.get(COLUMN1));
+        int to = Integer.parseInt((String) t.get(COLUMN2));
+        double distance = Double.parseDouble((String) t.get(COLUMN3));
+        double azimuth = Double.parseDouble((String) t.get(COLUMN4));
+        double inclination = Double.parseDouble((String) t.get(COLUMN5));
+        return new Data();
+    }
+
     private class ViewHolder {
         EditText editText1;
         EditText editText2;
@@ -80,11 +98,11 @@ public class ListviewAdapter extends BaseAdapter {
         }
 
         HashMap map = list.get(position);
-        holder.editText1.setText((String) map.get(COLUMN1));
-        holder.editText2.setText((String) map.get(COLUMN2));
-        holder.editText3.setText((String) map.get(COLUMN3));
-        holder.editText4.setText((String) map.get(COLUMN4));
-        holder.editText5.setText((String) map.get(COLUMN5));
+        holder.editText1.setText(map.get(COLUMN1).toString());
+        holder.editText2.setText(map.get(COLUMN2).toString());
+        holder.editText3.setText(map.get(COLUMN3).toString());
+        holder.editText4.setText(map.get(COLUMN4).toString());
+        holder.editText5.setText(map.get(COLUMN5).toString());
 
         return convertView;
     }

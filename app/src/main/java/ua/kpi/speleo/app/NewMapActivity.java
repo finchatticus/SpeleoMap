@@ -35,18 +35,19 @@ public class NewMapActivity extends Activity {
         super.onDestroy();
     }
 
-
-    View.OnClickListener buttonNewClickListener = new View.OnClickListener() {
+    private View.OnClickListener buttonNewClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String name = editTextName.getText().toString();
             if(!name.matches("")) {
-                Log.d(NewMapActivity.class.getSimpleName().toString(),"click");
+                Caves caves = new Caves(name);
+                CavesDAO cavesDAO = new CavesDAO(getApplicationContext());
+                long id = cavesDAO.save(caves);
+                caves.setId((int) id);
+                
                 Intent intent = new Intent(getApplicationContext(), DataActivity.class);
+                intent.putExtra("Caves", caves);
                 startActivity(intent);
-                //Caves caves = new Caves(name);
-                //CavesDAO cavesDAO = new CavesDAO(getApplicationContext());
-                //cavesDAO.save(caves);
             }
         }
     };

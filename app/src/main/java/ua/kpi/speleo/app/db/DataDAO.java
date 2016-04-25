@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import ua.kpi.speleo.app.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataDAO extends DataDBDAO {
@@ -72,6 +74,68 @@ public class DataDAO extends DataDBDAO {
         return dataList;
     }
 
+    public ArrayList<HashMap> getDataListHashmap(Caves caves) {
+        ArrayList<HashMap> dataList = new ArrayList<HashMap>();
+        /*String query = "SELECT "
+                + DATA_ID_WITH_PREFIX + ","
+                + DataBaseHelper.DATA_FROM + ","
+                + DataBaseHelper.DATA_TO + ","
+                + DataBaseHelper.DATA_DISTANCE + ","
+                + DataBaseHelper.DATA_AZIMUTH + ","
+                + DataBaseHelper.DATA_INCLINATION + ","
+                + DataBaseHelper.DATA_ROLL_ANGLE + ","
+                + DataBaseHelper.DATA_ID_CAVE + ","
+                + CAVES_NAME_WITH_PREFIX
+                + " FROM "
+                + DataBaseHelper.DATA_TABLE + " data INNER JOIN "
+                + DataBaseHelper.CAVES_TABLE + " caves ON data."
+                + DataBaseHelper.DATA_ID_CAVE + " = caves."
+                + DataBaseHelper.ID_COLUMN;*/
+
+        String query = "SELECT "
+                + DataBaseHelper.ID_COLUMN + ","
+                + DataBaseHelper.DATA_FROM + ","
+                + DataBaseHelper.DATA_TO + ","
+                + DataBaseHelper.DATA_DISTANCE + ","
+                + DataBaseHelper.DATA_AZIMUTH + ","
+                + DataBaseHelper.DATA_INCLINATION + ","
+                + DataBaseHelper.DATA_ROLL_ANGLE + ","
+                + DataBaseHelper.DATA_ID_CAVE
+                + " FROM "
+                + DataBaseHelper.DATA_TABLE
+                + " WHERE " + DataBaseHelper.DATA_ID_CAVE + " = " + String.valueOf(caves.getId());
+
+        Log.d("query", query);
+
+        Cursor cursor = database.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            Data data = new Data();
+            data.setId(cursor.getInt(0));
+            data.setFrom(cursor.getInt(1));
+            data.setTo(cursor.getInt(2));
+            data.setDistance(cursor.getDouble(3));
+            data.setAzimuth(cursor.getDouble(4));
+            data.setInclination(cursor.getDouble(5));
+            data.setRollAngle(cursor.getDouble(6));
+
+            caves = new Caves(cursor.getInt(7));
+            data.setCaves(caves);
+
+            Log.d("query", "id = " + data.getId());
+
+            HashMap t = new HashMap();
+            t.put(Constants.ID,data.getId());
+            t.put(Constants.COLUMN1, data.getFrom());
+            t.put(Constants.COLUMN2, data.getTo());
+            t.put(Constants.COLUMN3, data.getDistance());
+            t.put(Constants.COLUMN4, data.getAzimuth());
+            t.put(Constants.COLUMN5, data.getInclination());
+            t.put(Constants.ID_CAVE, data.getCaves().getId());
+            dataList.add(t);
+        }
+        return dataList;
+    }
+
     public long update(Data data) {
 
         ContentValues values = new ContentValues();
@@ -90,5 +154,9 @@ public class DataDAO extends DataDBDAO {
     public int delete(Data data) {
         return database.delete(DataBaseHelper.DATA_TABLE, WHERE_ID_EQUALS,
                 new String[] { data.getId() + "" });
+    }
+
+    public void deleteAll() {
+        database.execSQL("DELETE FROM " + DataBaseHelper.DATA_TABLE + " ;");
     }
 }
