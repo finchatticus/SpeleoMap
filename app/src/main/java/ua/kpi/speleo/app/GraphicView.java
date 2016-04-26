@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import ua.kpi.speleo.app.db.Caves;
+import ua.kpi.speleo.app.graphics.DrawCave;
 
 import java.util.jar.Attributes;
 
@@ -178,6 +180,9 @@ public class GraphicView extends View {
         // Use Color.parseColor to define HTML colors
         paint.setColor(Color.parseColor("#CD5C5C"));
         canvas.drawCircle(x / 2, y / 2, radius, paint);
+
+        DrawCave drawCave = new DrawCave(x,y,canvas,new Caves(94), getContext());
+        canvas = drawCave.getCanvas();
 
         canvas.restore();
     }
