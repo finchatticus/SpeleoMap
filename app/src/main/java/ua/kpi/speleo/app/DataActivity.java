@@ -75,6 +75,7 @@ public class DataActivity extends Activity {
 
         buttonRefresh.setOnClickListener(buttonRefreshOnClickListener);
         buttonSave.setOnClickListener(buttonSaveOnClickListener);
+        buttonSkeleton.setOnClickListener(buttonSkeletonOnClickListener);
     }
 
     @Override
@@ -118,6 +119,14 @@ public class DataActivity extends Activity {
             list = dataDAO.getDataListHashmap(caves);
             ListviewAdapter adapter = new ListviewAdapter(getActivity(), list);
             listViewData.setAdapter(adapter);
+        }
+    };
+
+    private View.OnClickListener buttonSkeletonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), SkeletonActivity.class);
+            startActivity(intent);
         }
     };
 
