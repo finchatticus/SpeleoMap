@@ -42,15 +42,33 @@ public class DrawCave {
             listModel.add(new Model(from,to,distance,azimuth,inclination,0, 0));
         }
 
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                Model model1 = listModel.get(i);
+                Model model2 = listModel.get(j);
+                if(model1.getFrom() == model2.getTo()) {
+                    float x2 = model2.getX2();
+                    float y2 = model2.getY2();
+                    model1.setX1(x2);
+                    model1.setY1(y2);
+                    listModel.set(i,model1);
+                }
+            }
+        }
+
 
 
 
         paint = new Paint();
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        paint.setColor(Color.RED);
         for (int i = 0; i < listModel.size(); i++) {
+            paint.setColor(Color.RED);
             canvas.drawLine(listModel.get(i).getX1(), listModel.get(i).getY1(), listModel.get(i).getX2(), listModel.get(i).getY2(), paint);
+            paint.setColor(Color.GREEN);
+            canvas.drawCircle(listModel.get(i).getX1(), listModel.get(i).getY1(), 1, paint);
+            canvas.drawCircle(listModel.get(i).getX2(), listModel.get(i).getY2(), 1, paint);
+            paint.setColor(Color.BLUE);
             canvas.drawText(String.valueOf(listModel.get(i).getTo()),listModel.get(i).getX2(),listModel.get(i).getY2() + 14,paint);
         }
         canvas.drawText(String.valueOf(listModel.get(1).getFrom()),listModel.get(1).getX1(),listModel.get(1).getY1() + 14, paint);

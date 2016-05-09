@@ -181,7 +181,9 @@ public class GraphicView extends View {
         paint.setColor(Color.parseColor("#CD5C5C"));
         canvas.drawCircle(x / 2, y / 2, radius, paint);
 
-        DrawCave drawCave = new DrawCave(x,y,canvas,new Caves(94), getContext());
+        Caves caves = SkeletonActivity.caves;
+        Log.v("View ","caves " + caves.getId() + " " + caves.getName());
+        DrawCave drawCave = new DrawCave(x,y,canvas,caves, getContext());
         canvas = drawCave.getCanvas();
 
         canvas.restore();
@@ -195,9 +197,6 @@ public class GraphicView extends View {
             return true;
         }
     }
-
-
-
 
    /* @Override
     protected void onDraw(Canvas canvas) {

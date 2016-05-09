@@ -41,7 +41,7 @@ public class DataActivity extends Activity {
         Log.d(LOG_TAG, "getParcelableExtra");
         caves = (Caves) getIntent().getParcelableExtra("Caves");
         Log.d(LOG_TAG, "caves: " + caves.getId() + ", " + caves.getName());
-        /*BluetoothDevice bluetoothDevice = BluetoothActivity.getBluetoothDeviceConnect();
+        BluetoothDevice bluetoothDevice = BluetoothActivity.getBluetoothDeviceConnect();
         if(bluetoothDevice == null) {
             Toast.makeText(getApplicationContext(), "Connect to DistoX please", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
@@ -62,7 +62,7 @@ public class DataActivity extends Activity {
             intent.putExtra("caves" ,caves);
             startService(intent);
             Log.v(LOG_TAG,"Start service");
-        }*/
+        }
 
         //DataDAO dataDAO = new DataDAO(getApplicationContext());
         //dataDAO.deleteAll();
@@ -126,6 +126,7 @@ public class DataActivity extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), SkeletonActivity.class);
+            intent.putExtra("Caves", caves);
             startActivity(intent);
         }
     };

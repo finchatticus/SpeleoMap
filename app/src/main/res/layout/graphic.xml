@@ -7,10 +7,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/graphicView" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-            android:layout_above="@+id/button" android:layout_alignParentRight="true"/>
+            android:layout_above="@+id/buttonBack" android:layout_alignParentRight="true"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
+            android:text="Back"
+            android:id="@+id/buttonBack" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
 </RelativeLayout>

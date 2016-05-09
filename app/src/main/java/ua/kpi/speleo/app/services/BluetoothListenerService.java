@@ -93,41 +93,43 @@ public class BluetoothListenerService extends Service {
                     try
                     {
                         while (true) {
-                            if (inputStream.available() >= 8) {
-                                int oldType = 0, oldDist = 0, oldAzi = 0, oldIncl = 0;  // previous
-                                inputStream.read(input, 0, 8); // receive 8 bytes
-                                byte type = input[0];
-                                if ((type & 0x3F) == 1) { // measurement data
-                                    int distance = input[1] + (input[2] << 8) + ((type & 0x40) << 10);
-                                    short azimuth = (short)(input[3] + (input[4] << 8));
-                                    short inclination = (short)(input[5] + (input[6] << 8));
-                                    outputStream.write(type & 0x80 | 0x55);  // send acknowledge byte
-                                    if (type != oldType || distance != oldDist || azimuth != oldAzi || inclination != oldIncl) { // valid data
-                                        DistoXEncoding distoXEncoding = new DistoXEncoding(input);
-                                        distoXData.add(distoXEncoding.getEncodingData());
+                            if (inputStream != null) {
+                                if (inputStream.available() >= 8 ) {
+                                    int oldType = 0, oldDist = 0, oldAzi = 0, oldIncl = 0;  // previous
+                                    inputStream.read(input, 0, 8); // receive 8 bytes
+                                    byte type = input[0];
+                                    if ((type & 0x3F) == 1) { // measurement data
+                                        int distance = input[1] + (input[2] << 8) + ((type & 0x40) << 10);
+                                        short azimuth = (short)(input[3] + (input[4] << 8));
+                                        short inclination = (short)(input[5] + (input[6] << 8));
+                                        outputStream.write(type & 0x80 | 0x55);  // send acknowledge byte
+                                        if (type != oldType || distance != oldDist || azimuth != oldAzi || inclination != oldIncl) { // valid data
+                                            DistoXEncoding distoXEncoding = new DistoXEncoding(input);
+                                            distoXData.add(distoXEncoding.getEncodingData());
 
-                                        SharedPreferences.Editor editor = preferencesTest.edit();
-                                        editor.putString("info", distoXEncoding.getEncodingData().toString());
-                                        editor.apply();
+                                            SharedPreferences.Editor editor = preferencesTest.edit();
+                                            editor.putString("info", distoXEncoding.getEncodingData().toString());
+                                            editor.apply();
 
-                                        Data data = new Data(distoXEncoding);
-                                        DataDAO dataDAO = new DataDAO(getApplicationContext());
-                                        data.setCaves(caves);
+                                            Data data = new Data(distoXEncoding);
+                                            DataDAO dataDAO = new DataDAO(getApplicationContext());
+                                            data.setCaves(caves);
 
-                                        dataDAO.save(data);
+                                            dataDAO.save(data);
 
-                                        /*
-                                        Intent intent = new Intent();
-                                        intent.setAction("BLUETOOTH_LISTENER_DATA");
-                                        intent.putExtra("dist", distoXEncoding.getDistance());
-                                        sendBroadcast(intent);
-                                        */
+                                            /*
+                                            Intent intent = new Intent();
+                                            intent.setAction("BLUETOOTH_LISTENER_DATA");
+                                            intent.putExtra("dist", distoXEncoding.getDistance());
+                                            sendBroadcast(intent);
+                                            */
 
 
-                                        oldType = type;
-                                        oldDist = distance;
-                                        oldAzi = azimuth;
-                                        oldIncl = inclination;
+                                            oldType = type;
+                                            oldDist = distance;
+                                            oldAzi = azimuth;
+                                            oldIncl = inclination;
+                                        }
                                     }
                                 }
                             }

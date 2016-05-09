@@ -30,4 +30,7 @@
     <string name="button_sketch">Sketch</string>
     <string name="button_save">Save</string>
     <string name="button_refresh">Refresh</string>
+
+    <!-- Skeleton activity -->
+    <string name="button_back">Back</string>
 </resources>
