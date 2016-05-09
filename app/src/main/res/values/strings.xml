@@ -33,4 +33,6 @@
 
     <!-- Skeleton activity -->
     <string name="button_back">Back</string>
+    <string name="textview_length"> Length:</string>
+    <string name="textview_area"> Area:</string>
 </resources>

@@ -49,6 +49,7 @@ public class GraphicView extends View {
     private boolean dragged;
     private int displayWidth;
     private int displayHeight;
+    private DrawCave drawCave;
 
     public GraphicView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -183,7 +184,7 @@ public class GraphicView extends View {
 
         Caves caves = SkeletonActivity.caves;
         Log.v("View ","caves " + caves.getId() + " " + caves.getName());
-        DrawCave drawCave = new DrawCave(x,y,canvas,caves, getContext());
+        drawCave = new DrawCave(x,y,canvas,caves, getContext());
         canvas = drawCave.getCanvas();
 
         canvas.restore();
@@ -230,4 +231,8 @@ public class GraphicView extends View {
 
         return true;
     }*/
+
+    public DrawCave getDrawCave() {
+        return drawCave;
+    }
 }

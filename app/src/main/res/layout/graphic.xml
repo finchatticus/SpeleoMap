@@ -13,4 +13,39 @@
             android:layout_height="wrap_content"
             android:text="Back"
             android:id="@+id/buttonBack" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/textview_length"
+            android:id="@+id/textViewLengthText" android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/buttonBack" android:layout_alignParentTop="false"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="New Text"
+            android:id="@+id/textViewLength" android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/textViewLengthText"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/textview_area"
+            android:id="@+id/textViewAreaText" android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/textViewLength"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView" android:layout_alignTop="@+id/buttonBack"
+            android:layout_toRightOf="@+id/textViewAreaText"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="New Text"
+            android:id="@+id/textViewArea" android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/textView"/>
 </RelativeLayout>

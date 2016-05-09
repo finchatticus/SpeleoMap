@@ -56,9 +56,6 @@ public class DrawCave {
             }
         }
 
-
-
-
         paint = new Paint();
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
