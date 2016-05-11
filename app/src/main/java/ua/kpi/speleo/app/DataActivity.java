@@ -6,15 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import ua.kpi.speleo.R;
-import ua.kpi.speleo.app.db.Caves;
-import ua.kpi.speleo.app.db.CavesDAO;
-import ua.kpi.speleo.app.db.Data;
-import ua.kpi.speleo.app.db.DataDAO;
+import ua.kpi.speleo.app.db.*;
 import ua.kpi.speleo.app.services.BluetoothListenerService;
 
 import java.util.ArrayList;
@@ -79,6 +73,16 @@ public class DataActivity extends Activity {
         buttonSave.setOnClickListener(buttonSaveOnClickListener);
         buttonSkeleton.setOnClickListener(buttonSkeletonOnClickListener);
         buttonConnect.setOnClickListener(buttonConnectOnClickListener);
+
+        listViewData.setOnItemClickListener(itemClickListener);
+        listViewData.setOnItemLongClickListener(itemLongClickListener);
+        listViewData.setOnItemSelectedListener(itemSelectedListener);
+
+        list = new ArrayList<HashMap>();
+        DataDAO dataDAO = new DataDAO(getApplicationContext());
+        list = dataDAO.getDataListHashmap(caves);
+        ListviewAdapter adapter = new ListviewAdapter(getActivity(), list);
+        listViewData.setAdapter(adapter);
     }
 
     @Override
@@ -140,6 +144,38 @@ public class DataActivity extends Activity {
             Intent intent = new Intent(getApplicationContext(), PointConnectActivity.class);
             intent.putExtra("Caves", caves);
             startActivity(intent);
+        }
+    };
+
+    private AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            System.out.println("onClick " + list.get(i).get(DataBaseHelper.ID_COLUMN));
+            Intent intent = new Intent(getApplicationContext(), UpdateDataActivity.class);
+            int idCave = (Integer) list.get(i).get(DataBaseHelper.ID_COLUMN);
+            System.out.println("id = " + idCave);
+            intent.putExtra("id",idCave);
+            startActivity(intent);
+        }
+    };
+
+    private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            System.out.println("onLongClick " + list.get(i).get(DataBaseHelper.ID_COLUMN));
+            return false;
+        }
+    };
+
+    private AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            System.out.println("onItemSelected " + list.get(i).get(DataBaseHelper.ID_COLUMN));
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            System.out.println("onItemSelected nothing " );
         }
     };
 

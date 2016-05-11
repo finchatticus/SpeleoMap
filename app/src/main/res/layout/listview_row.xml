@@ -5,43 +5,43 @@
         android:layout_width="fill_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
+    <TextView
             android:id="@+id/column1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/h1"
             android:layout_weight="1">
-    </EditText>
+    </TextView>
 
-    <EditText
+    <TextView
             android:id="@+id/column2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/h2"
             android:layout_weight="0.95">
-    </EditText>
+    </TextView>
 
-    <EditText
+    <TextView
             android:id="@+id/column3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/h3"
             android:layout_weight="1">
-    </EditText>
+    </TextView>
 
-    <EditText
+    <TextView
             android:id="@+id/column4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/h4"
             android:layout_weight="1">
-    </EditText>
+    </TextView>
 
-    <EditText
+    <TextView
             android:id="@+id/column5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/h5"
             android:layout_weight="1">
-    </EditText>
+    </TextView>
 </LinearLayout>

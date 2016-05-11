@@ -31,6 +31,8 @@
     <string name="button_save">Save</string>
     <string name="button_refresh">Refresh</string>
     <string name="button_connect">Connect</string>
+    <string name="button_area">Area</string>
+    <string name="button_add">Add</string>
 
     <!-- Skeleton activity -->
     <string name="button_back">Back</string>
@@ -42,4 +44,12 @@
     <string name="textview_point2">Point2:</string>
     <string name="button_connect_point">Connect</string>
     <string name="button_disconnect_point">Disconnect</string>
+
+    <!-- UpdateData activity -->
+    <string name="textview_from">From:</string>
+    <string name="textview_to">To:</string>
+    <string name="textview_distance">Distance:</string>
+    <string name="textview_azimuth">Azimuth:</string>
+    <string name="textview_inclination">Inclination:</string>
+    <string name="button_update">Update</string>
 </resources>

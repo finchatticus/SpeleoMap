@@ -35,6 +35,7 @@
         <activity android:name=".app.DataActivity" />
         <activity android:name=".app.SkeletonActivity" />
         <activity android:name=".app.PointConnectActivity" />
+        <activity android:name=".app.UpdateDataActivity" />
 
         <service
             android:name=".app.services.BluetoothListenerService"

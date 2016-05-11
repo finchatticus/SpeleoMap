@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import ua.kpi.speleo.R;
 import ua.kpi.speleo.app.db.Caves;
@@ -62,11 +63,11 @@ public class ListviewAdapter extends BaseAdapter {
     }*/
 
     private class ViewHolder {
-        EditText editText1;
-        EditText editText2;
-        EditText editText3;
-        EditText editText4;
-        EditText editText5;
+        TextView editText1;
+        TextView editText2;
+        TextView editText3;
+        TextView editText4;
+        TextView editText5;
     }
 
     @Override
@@ -81,15 +82,15 @@ public class ListviewAdapter extends BaseAdapter {
         {
             convertView = inflater.inflate(R.layout.listview_row, null);
             holder = new ViewHolder();
-            holder.editText1 = (EditText) convertView.findViewById(R.id.column1);
+            holder.editText1 = (TextView) convertView.findViewById(R.id.column1);
             holder.editText1.setRawInputType(Configuration.KEYBOARD_12KEY);
-            holder.editText2 = (EditText) convertView.findViewById(R.id.column2);
+            holder.editText2 = (TextView) convertView.findViewById(R.id.column2);
             holder.editText2.setRawInputType(Configuration.KEYBOARD_12KEY);
-            holder.editText3 = (EditText) convertView.findViewById(R.id.column3);
+            holder.editText3 = (TextView) convertView.findViewById(R.id.column3);
             holder.editText3.setRawInputType(Configuration.KEYBOARD_12KEY);
-            holder.editText4 = (EditText) convertView.findViewById(R.id.column4);
+            holder.editText4 = (TextView) convertView.findViewById(R.id.column4);
             holder.editText4.setRawInputType(Configuration.KEYBOARD_12KEY);
-            holder.editText5 = (EditText) convertView.findViewById(R.id.column5);
+            holder.editText5 = (TextView) convertView.findViewById(R.id.column5);
             holder.editText5.setRawInputType(Configuration.KEYBOARD_12KEY);
 
             convertView.setTag(holder);
@@ -107,7 +108,7 @@ public class ListviewAdapter extends BaseAdapter {
 
         //holder.editText1.addTextChangedListener();
 
-        holder.editText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+       /* holder.editText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (!b) {
@@ -235,10 +236,12 @@ public class ListviewAdapter extends BaseAdapter {
                     }
                 }
             }
-        });
+        });*/
 
 
         return convertView;
     }
+
+
 }
 

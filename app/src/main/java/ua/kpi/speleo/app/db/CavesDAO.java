@@ -59,4 +59,23 @@ public class CavesDAO extends DataDBDAO {
         return caves;
     }
 
+    public Caves get(int id) {
+        String query = "SELECT "
+                + DataBaseHelper.ID_COLUMN + ","
+                + DataBaseHelper.CAVES_NAME
+                + " FROM "
+                + DataBaseHelper.CAVES_TABLE + " WHERE "
+                + DataBaseHelper.ID_COLUMN + " = " + String.valueOf(id);
+
+        Log.d("query", query);
+        Cursor cursor = database.rawQuery(query, null);
+        Caves caves = new Caves();
+
+        while (cursor.moveToNext()) {
+            caves = new Caves(cursor.getInt(0), cursor.getString(1));
+        }
+
+        return caves;
+    }
+
 }

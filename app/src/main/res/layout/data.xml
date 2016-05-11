@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/listViewData" android:layout_below="@+id/header_line1" android:layout_alignParentLeft="true"
-            android:layout_above="@+id/buttonSkeleton"/>
+            android:layout_above="@+id/buttonArea"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,5 +88,16 @@
             android:text="@string/button_connect"
             android:id="@+id/buttonConnect" android:layout_below="@+id/listViewData"
             android:layout_toRightOf="@+id/buttonRefresh"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_area"
+            android:id="@+id/buttonArea" android:layout_above="@+id/buttonSkeleton" android:layout_alignParentLeft="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_add"
+            android:id="@+id/buttonAdd" android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/buttonSkeleton"/>
 
 </RelativeLayout>

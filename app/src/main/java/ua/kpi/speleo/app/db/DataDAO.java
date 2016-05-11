@@ -134,6 +134,46 @@ public class DataDAO extends DataDBDAO {
         return dataList;
     }
 
+    public Data get(int id) {
+        String query = "SELECT "
+                + DATA_ID_WITH_PREFIX + ","
+                + DataBaseHelper.DATA_FROM + ","
+                + DataBaseHelper.DATA_TO + ","
+                + DataBaseHelper.DATA_DISTANCE + ","
+                + DataBaseHelper.DATA_AZIMUTH + ","
+                + DataBaseHelper.DATA_INCLINATION + ","
+                + DataBaseHelper.DATA_ROLL_ANGLE + ","
+                + DataBaseHelper.DATA_ID_CAVE + ","
+                + CAVES_NAME_WITH_PREFIX
+                + " FROM "
+                + DataBaseHelper.DATA_TABLE + " data INNER JOIN "
+                + DataBaseHelper.CAVES_TABLE + " caves ON data."
+                + DataBaseHelper.DATA_ID_CAVE + " = caves."
+                + DataBaseHelper.ID_COLUMN + " WHERE "
+                + DATA_ID_WITH_PREFIX + " = " + String.valueOf(id);
+
+        Log.d("query", query);
+        Cursor cursor = database.rawQuery(query, null);
+        Data data = new Data();
+
+        while (cursor.moveToNext()) {
+            data.setId(cursor.getInt(0));
+            data.setFrom(cursor.getInt(1));
+            data.setTo(cursor.getInt(2));
+            data.setDistance(cursor.getDouble(3));
+            data.setAzimuth(cursor.getDouble(4));
+            data.setInclination(cursor.getDouble(5));
+            data.setRollAngle(cursor.getDouble(6));
+
+            Caves caves = new Caves(cursor.getInt(7), cursor.getString(8));
+            data.setCaves(caves);
+            Log.d("data_data", data.toString());
+            Log.d("data_caves", caves.toString());
+        }
+
+            return data;
+    }
+
     public long update(Data data) {
 
         ContentValues values = new ContentValues();
@@ -150,6 +190,8 @@ public class DataDAO extends DataDBDAO {
         Log.d("Update Result:", "=" + result);
         return result;
     }
+
+
 
     public int delete(Data data) {
         return database.delete(DataBaseHelper.DATA_TABLE, WHERE_ID_EQUALS,
