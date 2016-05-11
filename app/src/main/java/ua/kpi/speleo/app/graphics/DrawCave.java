@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import ua.kpi.speleo.app.Constants;
+import ua.kpi.speleo.app.PointConnectActivity;
+import ua.kpi.speleo.app.PointConnectActivity2;
 import ua.kpi.speleo.app.db.Caves;
 import ua.kpi.speleo.app.db.Data;
 import ua.kpi.speleo.app.db.DataDAO;
@@ -96,6 +98,40 @@ public class DrawCave {
 
         //canvas.drawLine(0.0f,0.0f,50,50,paint);
         //canvas.drawPoint();
+
+        //connect points
+        System.out.println("connect points");
+        if(PointConnectActivity2.listConnected != null) {
+            System.out.println("con != null");
+            System.out.println("size = " + PointConnectActivity2.listConnected.size());
+            /*for (int i = 0; i < PointConnectActivity2.listConnected.size(); i++) {
+                for (int j = i + 1; j < PointConnectActivity2.listConnected.size() - 1; j++) {
+                    paint.setColor(Color.BLACK);
+                    float x2_1 = PointConnectActivity2.listConnected.get(i).getX2();
+                    float y2_1 = PointConnectActivity2.listConnected.get(i).getY2();
+                    float x2_2 = PointConnectActivity2.listConnected.get(j).getX2();
+                    float y2_2 = PointConnectActivity2.listConnected.get(j).getY2();
+                    System.out.println(x2_1);
+                    System.out.println(y2_1);
+                    System.out.println(x2_2);
+                    System.out.println(y2_2);
+                    canvas.drawLine(x2_1, y2_1, x2_2, y2_2, paint);
+                }
+            }*/
+            for (int i = 0; i < PointConnectActivity2.listConnected.size(); i++) {
+                    paint.setColor(Color.BLACK);
+                    float x2_1 = PointConnectActivity2.listConnected.get(i).getModel1().getX2();
+                    float y2_1 = PointConnectActivity2.listConnected.get(i).getModel1().getY2();
+                    float x2_2 = PointConnectActivity2.listConnected.get(i).getModel2().getX2();
+                    float y2_2 = PointConnectActivity2.listConnected.get(i).getModel2().getY2();
+                    System.out.println(x2_1);
+                    System.out.println(y2_1);
+                    System.out.println(x2_2);
+                    System.out.println(y2_2);
+                    canvas.drawLine(x2_1, y2_1, x2_2, y2_2, paint);
+            }
+        }
+
     }
 
     public Canvas getCanvas() {

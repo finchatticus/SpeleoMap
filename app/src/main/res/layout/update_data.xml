@@ -54,4 +54,9 @@
             android:layout_height="wrap_content"
             android:text="@string/button_update"
             android:id="@+id/buttonUpdate"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_delete"
+            android:id="@+id/buttonDelete"/>
 </LinearLayout>

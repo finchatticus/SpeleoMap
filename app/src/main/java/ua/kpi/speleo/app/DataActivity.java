@@ -144,7 +144,10 @@ public class DataActivity extends Activity {
     private View.OnClickListener buttonConnectOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(getApplicationContext(), PointConnectActivity.class);
+            /*Intent intent = new Intent(getApplicationContext(), PointConnectActivity.class);
+            intent.putExtra("Caves", caves);
+            startActivity(intent);*/
+            Intent intent = new Intent(getApplicationContext(), PointConnectActivity2.class);
             intent.putExtra("Caves", caves);
             startActivity(intent);
         }
@@ -155,12 +158,12 @@ public class DataActivity extends Activity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             System.out.println("onClick " + list.get(i).get(DataBaseHelper.ID_COLUMN));
             Intent intent = new Intent(getApplicationContext(), UpdateDataActivity.class);
-            int idCave = (Integer) list.get(i).get(DataBaseHelper.ID_COLUMN);
+            int id = (Integer) list.get(i).get(DataBaseHelper.ID_COLUMN);
             DataDAO dataDAO = new DataDAO(getApplicationContext());
-            Data data = dataDAO.get(idCave);
+            Data data = dataDAO.get(id);
             intent.putExtra("Data", data);
-            System.out.println("id = " + idCave);
-            intent.putExtra("id",idCave);
+            System.out.println("id = " + id);
+            intent.putExtra("id",id);
             startActivity(intent);
         }
     };
@@ -191,7 +194,7 @@ public class DataActivity extends Activity {
             Intent intent = new Intent(getApplicationContext(), AddDataActivity.class);
             int idCave = caves.getId();
             System.out.println("id = " + idCave);
-            intent.putExtra("id",idCave);
+            intent.putExtra("idCave",idCave);
             startActivity(intent);
         }
     };

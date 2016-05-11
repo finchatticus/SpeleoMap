@@ -52,5 +52,10 @@
     <string name="textview_azimuth">Azimuth:</string>
     <string name="textview_inclination">Inclination:</string>
     <string name="button_update">Update</string>
+    <string name="button_delete">Delete</string>
+
+    <!-- Point connect activity -->
+    <string name="button_connect_points">Connect</string>
+    <string name="button_disconnect_points">Disconnect</string>
 
 </resources>

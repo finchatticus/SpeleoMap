@@ -47,7 +47,7 @@ public class AddDataActivity extends Activity {
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(buttonAddOnClickListener);
 
-        idCave = getIntent().getIntExtra("id",-1);
+        idCave = getIntent().getIntExtra("idCave",-1);
         if(idCave == -1) {
             buttonAdd.setEnabled(false);
             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();

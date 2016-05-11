@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_connect_points"
+            android:id="@+id/buttonConnect" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"/>
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewData" android:layout_above="@+id/buttonConnect" android:layout_alignParentLeft="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_disconnect_points"
+            android:id="@+id/buttonDiconnect" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/buttonConnect"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back"
+            android:id="@+id/buttonBack" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/buttonDiconnect"/>
+</RelativeLayout>

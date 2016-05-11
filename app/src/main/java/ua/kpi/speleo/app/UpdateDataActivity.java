@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import ua.kpi.speleo.R;
-import ua.kpi.speleo.app.db.Caves;
-import ua.kpi.speleo.app.db.CavesDAO;
 import ua.kpi.speleo.app.db.Data;
 import ua.kpi.speleo.app.db.DataDAO;
 
@@ -21,8 +19,9 @@ public class UpdateDataActivity extends Activity {
     private EditText editTextAzimuth;
     private EditText editTextInclination;
     private Button buttonUpdate;
+    private Button buttonDelete;
 
-    private int idCave;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,12 @@ public class UpdateDataActivity extends Activity {
         buttonUpdate = (Button) findViewById(R.id.buttonUpdate);
         buttonUpdate.setOnClickListener(buttonUpdateOnClickListener);
 
-        idCave = getIntent().getIntExtra("id",-1);
+        buttonDelete = (Button) findViewById(R.id.buttonDelete);
+        buttonDelete.setOnClickListener(buttonDeleteOnClickListener);
+
+        id = getIntent().getIntExtra("id",-1);
         Data data = (Data) getIntent().getParcelableExtra("Data");
-        if(idCave == -1 || data == null) {
+        if(id == -1 || data == null) {
             buttonUpdate.setEnabled(false);
             Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
         }
@@ -77,7 +79,7 @@ public class UpdateDataActivity extends Activity {
             String azimuthStr = editTextAzimuth.getText().toString();
             String inclinationStr = editTextInclination.getText().toString();
 
-            Data data = dataDAO.get(idCave);
+            Data data = dataDAO.get(id);
             System.out.println("updateonclick " + data.toString());
 
             //TODO: to one if
@@ -98,6 +100,19 @@ public class UpdateDataActivity extends Activity {
             }
 
             dataDAO.update(data);
+
+            Intent intent = new Intent(getApplicationContext(),DataActivity.class);
+            intent.putExtra("Caves", data.getCaves());
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener buttonDeleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DataDAO dataDAO = new DataDAO(getApplicationContext());
+            Data data = dataDAO.get(id);
+            dataDAO.delete(data);
 
             Intent intent = new Intent(getApplicationContext(),DataActivity.class);
             intent.putExtra("Caves", data.getCaves());
