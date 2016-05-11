@@ -30,9 +30,16 @@
     <string name="button_sketch">Sketch</string>
     <string name="button_save">Save</string>
     <string name="button_refresh">Refresh</string>
+    <string name="button_connect">Connect</string>
 
     <!-- Skeleton activity -->
     <string name="button_back">Back</string>
     <string name="textview_length"> Length:</string>
     <string name="textview_area"> Area:</string>
+
+    <!-- Point connect activity -->
+    <string name="textview_point1">Point1:</string>
+    <string name="textview_point2">Point2:</string>
+    <string name="button_connect_point">Connect</string>
+    <string name="button_disconnect_point">Disconnect</string>
 </resources>

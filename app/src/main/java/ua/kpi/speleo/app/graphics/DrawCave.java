@@ -1,6 +1,7 @@
 package ua.kpi.speleo.app.graphics;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,6 +20,7 @@ public class DrawCave {
     private Canvas canvas;
     private Caves caves;
     private Context context;
+    private SharedPreferences sharedPreferences;
 
     public DrawCave(int width, int height, Canvas canvas, Caves caves,Context context) {
         this.height = height;
@@ -26,6 +28,8 @@ public class DrawCave {
         this.canvas = canvas;
         this.caves = caves;
         this.context = context;
+
+        sharedPreferences = context.getSharedPreferences(caves.getId() + "_points_coordinates", Context.MODE_PRIVATE);
 
         DataDAO dataDAO = new DataDAO(context);
 
@@ -51,9 +55,29 @@ public class DrawCave {
                     float y2 = model2.getY2();
                     model1.setX1(x2);
                     model1.setY1(y2);
+
+                    float x2Real = model2.getX2Real();
+                    float y2Real = model2.getY2Real();
+                    model1.setX1Real(x2Real);
+                    model1.setY2Real(y2Real);
+
                     listModel.set(i,model1);
+                    System.out.println("listmodel");
+
+                    System.out.println("x1 " + model1.getX1());
+                    System.out.println("y1 " + model1.getY1());
+
+                    System.out.println("x1Real " + model1.getX1Real());
+                    System.out.println("y1Real " + model1.getY1Real());
                 }
             }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putFloat("x_coord", listModel.get(i).getX1());
+            editor.putFloat("y_coord", listModel.get(i).getY1());
+            editor.commit();
         }
 
         paint = new Paint();

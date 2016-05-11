@@ -27,6 +27,7 @@ public class DataActivity extends Activity {
     private Button buttonSketch;
     private Button buttonSave;
     private Button buttonRefresh;
+    private Button buttonConnect;
     private ListView listViewData;
 
     private ArrayList<HashMap> list;
@@ -71,11 +72,13 @@ public class DataActivity extends Activity {
         buttonSketch = (Button) findViewById(R.id.buttonSketch);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonRefresh = (Button) findViewById(R.id.buttonRefresh);
+        buttonConnect = (Button) findViewById(R.id.buttonConnect);
         listViewData = (ListView) findViewById(R.id.listViewData);
 
         buttonRefresh.setOnClickListener(buttonRefreshOnClickListener);
         buttonSave.setOnClickListener(buttonSaveOnClickListener);
         buttonSkeleton.setOnClickListener(buttonSkeletonOnClickListener);
+        buttonConnect.setOnClickListener(buttonConnectOnClickListener);
     }
 
     @Override
@@ -131,7 +134,20 @@ public class DataActivity extends Activity {
         }
     };
 
+    private View.OnClickListener buttonConnectOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), PointConnectActivity.class);
+            intent.putExtra("Caves", caves);
+            startActivity(intent);
+        }
+    };
+
     private Activity getActivity() {
         return this;
+    }
+
+    public Caves getCaves() {
+        return caves;
     }
 }

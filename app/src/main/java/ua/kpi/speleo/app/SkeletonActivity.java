@@ -35,6 +35,7 @@ public class SkeletonActivity extends Activity {
 
         graphicView = (GraphicView) findViewById(R.id.graphicView);
         buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(onClickButtonBackListener);
         textViewLength = (TextView) findViewById(R.id.textViewLength);
 
         DataDAO dataDAO = new DataDAO(this);

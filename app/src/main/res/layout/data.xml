@@ -82,5 +82,11 @@
             android:text="@string/button_refresh"
             android:id="@+id/buttonRefresh" android:layout_below="@+id/listViewData"
             android:layout_toRightOf="@+id/buttonSave"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_connect"
+            android:id="@+id/buttonConnect" android:layout_below="@+id/listViewData"
+            android:layout_toRightOf="@+id/buttonRefresh"/>
 
 </RelativeLayout>

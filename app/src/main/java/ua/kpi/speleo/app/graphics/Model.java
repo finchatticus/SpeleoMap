@@ -7,6 +7,10 @@ public class Model {
     private float y1;
     private float x2;
     private float y2;
+    private float x1Real;
+    private float y1Real;
+    private float x2Real;
+    private float y2Real;
     private double distance;
     private double azimuth;
     private double inclination;
@@ -23,6 +27,8 @@ public class Model {
         this.to = to;
         this.x1 = 20 * x1 + 800 / 2;
         this.y1 = 1044 / 2 - 20 * y1;
+        this.x1Real = x1;
+        this.y1Real = y1;
         this.distance = distance;
         this.azimuth = azimuth;
         this.inclination = inclination;
@@ -32,6 +38,8 @@ public class Model {
         deltaY = Math.sin((azimuth * Math.PI) / 180) * d;
         x2 = 20 * ((float)(x1 + deltaX)) + 800 / 2;
         y2 = 1044 / 2 - ((float)(y1 + deltaY)) * 20;
+        x2Real = ((float)(x1Real + deltaX));
+        y2Real = ((float)(y2Real + deltaY));
         System.out.println("x1 " + x1);
         System.out.println("y1 " + y1);
         System.out.println("x2 " + x2);
@@ -132,5 +140,37 @@ public class Model {
 
     public void setDeltaY(double deltaY) {
         this.deltaY = deltaY;
+    }
+
+    public float getX1Real() {
+        return x1Real;
+    }
+
+    public float getY1Real() {
+        return y1Real;
+    }
+
+    public void setX1Real(float x1Real) {
+        this.x1Real = x1Real;
+    }
+
+    public void setY1Real(float y1Real) {
+        this.y1Real = y1Real;
+    }
+
+    public float getX2Real() {
+        return x2Real;
+    }
+
+    public void setX2Real(float x2Real) {
+        this.x2Real = x2Real;
+    }
+
+    public float getY2Real() {
+        return y2Real;
+    }
+
+    public void setY2Real(float y2Real) {
+        this.y2Real = y2Real;
     }
 }
