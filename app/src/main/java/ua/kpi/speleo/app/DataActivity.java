@@ -22,6 +22,7 @@ public class DataActivity extends Activity {
     private Button buttonSave;
     private Button buttonRefresh;
     private Button buttonConnect;
+    private Button buttonAdd;
     private ListView listViewData;
 
     private ArrayList<HashMap> list;
@@ -67,12 +68,14 @@ public class DataActivity extends Activity {
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonRefresh = (Button) findViewById(R.id.buttonRefresh);
         buttonConnect = (Button) findViewById(R.id.buttonConnect);
+        buttonAdd = (Button) findViewById(R.id.buttonAdd);
         listViewData = (ListView) findViewById(R.id.listViewData);
 
         buttonRefresh.setOnClickListener(buttonRefreshOnClickListener);
         buttonSave.setOnClickListener(buttonSaveOnClickListener);
         buttonSkeleton.setOnClickListener(buttonSkeletonOnClickListener);
         buttonConnect.setOnClickListener(buttonConnectOnClickListener);
+        buttonAdd.setOnClickListener(buttonAddOnclickListener);
 
         listViewData.setOnItemClickListener(itemClickListener);
         listViewData.setOnItemLongClickListener(itemLongClickListener);
@@ -153,6 +156,9 @@ public class DataActivity extends Activity {
             System.out.println("onClick " + list.get(i).get(DataBaseHelper.ID_COLUMN));
             Intent intent = new Intent(getApplicationContext(), UpdateDataActivity.class);
             int idCave = (Integer) list.get(i).get(DataBaseHelper.ID_COLUMN);
+            DataDAO dataDAO = new DataDAO(getApplicationContext());
+            Data data = dataDAO.get(idCave);
+            intent.putExtra("Data", data);
             System.out.println("id = " + idCave);
             intent.putExtra("id",idCave);
             startActivity(intent);
@@ -176,6 +182,17 @@ public class DataActivity extends Activity {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
             System.out.println("onItemSelected nothing " );
+        }
+    };
+
+    private View.OnClickListener buttonAddOnclickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), AddDataActivity.class);
+            int idCave = caves.getId();
+            System.out.println("id = " + idCave);
+            intent.putExtra("id",idCave);
+            startActivity(intent);
         }
     };
 

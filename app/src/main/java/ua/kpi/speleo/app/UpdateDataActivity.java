@@ -48,10 +48,17 @@ public class UpdateDataActivity extends Activity {
         buttonUpdate.setOnClickListener(buttonUpdateOnClickListener);
 
         idCave = getIntent().getIntExtra("id",-1);
-        if(idCave == -1) {
+        Data data = (Data) getIntent().getParcelableExtra("Data");
+        if(idCave == -1 || data == null) {
             buttonUpdate.setEnabled(false);
             Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
         }
+
+        editTextFrom.setText(String.valueOf(data.getFrom()));
+        editTextTo.setText(String.valueOf(data.getTo()));
+        editTextDistance.setText(String.valueOf(data.getDistance()));
+        editTextAzimuth.setText(String.valueOf(data.getAzimuth()));
+        editTextInclination.setText(String.valueOf(data.getInclination()));
     }
 
     @Override
@@ -73,6 +80,7 @@ public class UpdateDataActivity extends Activity {
             Data data = dataDAO.get(idCave);
             System.out.println("updateonclick " + data.toString());
 
+            //TODO: to one if
             if(fromStr != null) {
                 data.setFrom(Integer.valueOf(fromStr));
             }

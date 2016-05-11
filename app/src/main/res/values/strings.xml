@@ -52,4 +52,5 @@
     <string name="textview_azimuth">Azimuth:</string>
     <string name="textview_inclination">Inclination:</string>
     <string name="button_update">Update</string>
+
 </resources>
